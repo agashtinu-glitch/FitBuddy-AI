@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Your plan · FitBuddy{% endblock %}
+{% block content %}
+<div class="result-wrap">
+  <a class="back-link" href="/">← Build another plan</a>
+  <div class="result-head"><div><div class="eyebrow"><span class="pulse"></span> YOUR PERSONAL PLAN</div><h1>Your week,<br><span>your way.</span></h1></div><div class="result-stamp"><span>7</span><small>DAY<br>PLAN</small></div></div>
+  {% if message %}<div class="success-box" role="status">✓ {{ message }}</div>{% endif %}
+  <section class="profile-strip"><div><small>PLANNED FOR</small><strong>{{ user.name }}</strong></div><div><small>YOUR GOAL</small><strong>{{ goal_labels[user.goal] }}</strong></div><div><small>INTENSITY</small><strong>{{ user.intensity|title }}</strong></div><div><small>EXPERIENCE</small><strong>{{ user.experience|title }}</strong></div><div><small>PROFILE</small><strong>{{ user.age }} yrs · {{ user.weight_kg }} kg</strong></div></section>
+  {% if ai_used %}<div class="mode-banner ai-banner"><span>✦</span> Plan generated with Gemini AI</div>{% else %}<div class="mode-banner"><span>✦</span> Demo plan · Add a Gemini API key to enable AI-generated plans</div>{% endif %}
+  <section class="content-card plan-card"><div class="section-heading"><div><div class="eyebrow muted">YOUR WEEK AT A GLANCE</div><h2>{% if updated %}Updated workout plan{% else %}Your workout plan{% endif %}</h2></div><span class="tag">{{ 'UPDATED' if updated else '7 DAYS' }}</span></div><pre class="plan-text">{{ workout_text }}</pre></section>
+  <section class="tip-card"><div class="tip-symbol">✳</div><div><div class="eyebrow">FUEL & RECOVER</div><h2>A little reminder</h2><p>{{ plan.nutrition_tip }}</p></div></section>
+  <section class="content-card feedback-card"><div class="section-heading"><div><div class="eyebrow muted">MAKE IT YOURS</div><h2>Want to adjust your plan?</h2><p class="card-intro">Tell us what you'd like to change. The plan will be updated using your feedback.</p></div></div>
+    <form action="/submit-feedback/{{ plan.id }}" method="post" class="feedback-form"><label class="field" for="feedback"><span>Your feedback</span><textarea id="feedback" name="feedback" rows="3" minlength="4" maxlength="1000" placeholder="For example: add more walking and a rest day after strength workouts" required></textarea></label><button class="button button-dark" type="submit">Update my plan <span aria-hidden="true">↗</span></button></form>
+  </section>
+  <p class="medical-note">Move within your comfort level. Stop if you feel pain. This plan is general information and is not a substitute for advice from a qualified health professional.</p>
+</div>
+{% endblock %}

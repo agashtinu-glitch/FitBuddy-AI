@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Build your plan · FitBuddy{% endblock %}
+{% block content %}
+<section class="hero-grid">
+  <div class="hero-copy">
+    <div class="eyebrow"><span class="pulse"></span> YOUR PERSONAL FITNESS COMPANION</div>
+    <h1>Small steps.<br><span>Stronger you.</span></h1>
+    <p class="hero-text">A practical 7-day plan shaped around your goals, experience, and pace. Start where you are and build from there.</p>
+    <div class="hero-points"><div><span class="point-icon">✳</span><span>Made for your goal</span></div><div><span class="point-icon">↗</span><span>Adaptable with feedback</span></div><div><span class="point-icon">♡</span><span>Rest is part of progress</span></div></div>
+    <div class="hero-note"><span class="note-icon">✦</span><span>AI-assisted guidance, designed to keep healthy habits simple.</span></div>
+  </div>
+  <section class="form-card" aria-labelledby="form-title">
+    <div class="card-heading"><div><div class="eyebrow muted">LET'S GET STARTED</div><h2 id="form-title">Build your plan</h2></div><span class="step-badge">01 <i>/ 01</i></span></div>
+    <p class="card-intro">Tell us a little about yourself. Your details are used to shape this plan.</p>
+    {% if error %}<div class="error-box" role="alert">{{ error }}</div>{% endif %}
+    <form action="/generate-workout" method="post" class="fitness-form">
+      <label class="field"><span>Your name</span><input name="name" type="text" placeholder="e.g. Ananya" minlength="2" maxlength="80" value="{{ form.name }}" required autocomplete="name"></label>
+      <div class="field-row">
+        <label class="field"><span>Age</span><div class="input-unit"><input name="age" type="number" min="16" max="90" placeholder="21" value="{{ form.age }}" required><em>years</em></div></label>
+        <label class="field"><span>Weight</span><div class="input-unit"><input name="weight_kg" type="number" min="25.1" max="300" step="0.1" placeholder="60" value="{{ form.weight_kg }}" required><em>kg</em></div></label>
+      </div>
+      <label class="field"><span>What's your main goal?</span><select name="goal" required><option value="weight_loss" {% if form.goal == 'weight_loss' %}selected{% endif %}>Lose weight</option><option value="muscle_gain" {% if form.goal == 'muscle_gain' %}selected{% endif %}>Build muscle</option><option value="general_fitness" {% if form.goal == 'general_fitness' %}selected{% endif %}>General fitness</option><option value="flexibility" {% if form.goal == 'flexibility' %}selected{% endif %}>Improve flexibility</option></select></label>
+      <div class="field-row">
+        <label class="field"><span>Workout intensity</span><select name="intensity"><option value="low" {% if form.intensity == 'low' %}selected{% endif %}>Low</option><option value="medium" {% if form.intensity == 'medium' %}selected{% endif %}>Medium</option><option value="high" {% if form.intensity == 'high' %}selected{% endif %}>High</option></select></label>
+        <label class="field"><span>Experience</span><select name="experience"><option value="beginner" {% if form.experience == 'beginner' %}selected{% endif %}>Beginner</option><option value="intermediate" {% if form.experience == 'intermediate' %}selected{% endif %}>Intermediate</option><option value="advanced" {% if form.experience == 'advanced' %}selected{% endif %}>Advanced</option></select></label>
+      </div>
+      <button class="button button-primary" type="submit">Create my 7-day plan <span aria-hidden="true">↗</span></button>
+      <p class="privacy-line"><span>◇</span> Your profile is stored locally in this project database.</p>
+    </form>
+  </section>
+</section>
+<section class="trust-strip"><div><strong>07</strong><span>days of structure</span></div><div><strong>01</strong><span>personal goal</span></div><div><strong>∞</strong><span>ways to adjust</span></div><p>Every plan includes movement, recovery, and room to grow.</p></section>
+<p class="medical-note">FitBuddy provides general educational suggestions, not medical advice. Ask a qualified health professional before starting if you have a health concern.</p>
+{% endblock %}
